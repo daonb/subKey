@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>tmp file</title>
+    <script type="text/javascript" src="jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="jquery.sparkline.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        var xVal;
+        var v0 = 50, v1 = 25, v2 = 33, v3 = 25, v4 = 10, v5 = 25, v6 = 30, v7 = 25, v8 = 66, v9 = 25, v10 = 50;
+        var values = [0,v0,0,v1,0,v2,0,v3,0,v4,0,v5,0,v6,0,v7,0,v8,0,v9,0,v10,0];
+        $(".keygraph").sparkline(values, {
+            type: 'line',
+            width: '500',
+            height: '100',
+            lineWidth: 0,
+            lineColor: '#c0d0f0',
+            fillColor: '#c0d0f0',
+            tooltipOffsetX: -30,
+            tooltipOffsetY: 20,
+            minSpotColor: false,
+            maxSpotColor: false,
+            drawNormalOnTop: true,
+            disableHighlight: true,
+            disableInteraction: false,
+            tooltipFormat : $.spformat('<center>{{y:name}}<br><img src="imgs\\{{y:path}}.JPG" height="50" width="50"><br>CURRENT ID:{{y}}</center'),
+            tooltipValueLookups: {
+                path: $.range_map({'0:300': 'no_pic' , '10': 'tzipi', '25': 'barak', '50': 'bibi'}),
+                name: $.range_map({'0:300': 'ללא שם' ,'10': 'ציפי לבני', '25': 'אהוד ברק', '50': 'בנימין נתניהו'})
+            }
+            <!--     -->
+        });
+
+        $('.keygraph').bind('sparklineRegionChange',function(ev) {
+            sparkline = ev.sparklines[0];
+            xVal = sparkline.getCurrentRegionFields().x;
+            yVal = sparkline.getCurrentRegionFields().y;
+            if (xVal % 2 != 1) {
+                keygraph.disableInteraction(true);
+            };
+        })
+
+        $('.keygraph').bind('mouseleave',function() {
+            $('.mouseoverregion').text('');
+        })
+    })
+    </script>
+</head>
+
+<body>
+
+    <center><br><br><br><br><br><br>
+    <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th rowspan="2">key head</th>
+                <th><span class="keygraph"></th>
+                <th rowspan="2">key end here</th>
+            </tr>
+            <tr>
+                <td bgcolor="#c0d0f0">key bottom</td>
+            </tr>
+    </table>
+    </center>
+    
+</body>
+</html>
